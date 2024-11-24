@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopping Cart</title>
+    <link rel="stylesheet" href="styles1.css">
+</head>
+<body>
+<form name="submit-to-google-sheet">
+ 
+
+    <header>
+      <h1> JAYANTH</h1>
+        <h2> E-COMMERCE STORE</h2>
+
+        <div id="cart-icon">
+            <button onclick="viewCart()">View Cart (<span id="cart-count">0</span>)</button>
+        </div>
+    </header>
+
+    <div class="categories">
+        <button onclick="filterCategory('electronics')">Electronics</button>
+        <button onclick="filterCategory('clothes')">Clothes</button>
+        <button onclick="filterCategory('accessories')">Accessories</button>
+        <button onclick="filterCategory('all')">All Products</button>
+    </div>
+
+    <div id="product-list">
+        <!-- Product items will be injected here -->
+    </div>
+
+    <!-- Cart Modal -->
+    <div id="cart-modal" style="display: none;">
+        <div class="cart-modal-content">
+            <h2>Shopping Cart</h2>
+            <ul id="cart-items-list">
+                <!-- Cart items will be listed here -->
+            </ul>
+            <div id="cart-total"></div>
+            <button onclick="openCheckout()">Proceed to Checkout</button>
+            <button onclick="closeCart()">Close Cart</button>
+        </div>
+    </div>
+
+    <!-- Checkout Section -->
+    <div class="checkout-section" id="checkout-section" style="display: none;">
+        <h2>Checkout</h2>
+        <form id="checkout-form">
+            <label for="name">Name:</label>
+            <input type="text" id="name" required>
+            
+            <label for="address">Address:</label>
+            <input type="text" id="address" required>
+            
+            <label for="shipping-method">Shipping Method:</label>
+            <select id="shipping-method">
+                <option value="standard">Standard Shipping ($5)</option>
+                <option value="express">Express Shipping ($15)</option>
+            </select>
+            
+            <button type="submit">Place Order</button>
+        </form>
+        <button onclick="cancelCheckout()">Cancel</button>
+    </div>
+
+
+<script>
+  const scriptURL = 'https://docs.google.com/spreadsheets/d/1BlIMmRSAkc5GhEh8pp-kIT7Ue7BMpbxD74ocXkgcgO4/edit?gid=0#gid=0'
+  const form = document.forms['submit-to-google-sheet']
+
+  form.addEventListener('submit', e => {
+    e.preventDefault()
+    fetch(scriptURL, { method: 'POST', body: new FormData(form)})
+      .then(response => console.log('Success!', response))
+      .catch(error => console.error('Error!', error.message))
+  })
+</script>
+
+    <script src="script.js"></script>
+</form>
+</body>
+</html>
